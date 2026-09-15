@@ -1,0 +1,9 @@
+{
+  "name": "名古屋 Chill 7天6夜",
+  "short_name": "名古屋Chill",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7f3ea",
+  "theme_color": "#17324d",
+  "lang": "zh-TW"
+}

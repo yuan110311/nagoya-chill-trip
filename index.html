@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#17324d">
+<title>名古屋 Chill 7天6夜</title>
+<link rel="manifest" href="manifest.json">
+<style>
+:root{--navy:#17324d;--blue:#2f668d;--cream:#f7f3ea;--card:#fff;--text:#24313c;--muted:#71808c;--line:#e7e1d7;--gold:#c79a42}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC",sans-serif;color:var(--text);padding-bottom:82px}
+.hero{background:linear-gradient(145deg,#17324d,#315f7b);color:#fff;padding:28px 20px 24px;border-radius:0 0 28px 28px}
+.hero small{opacity:.8}.hero h1{font-size:28px;margin:7px 0}.hero p{margin:5px 0;opacity:.9}
+.container{max-width:720px;margin:auto;padding:14px}
+.day{background:var(--card);border-radius:20px;margin:12px 0;overflow:hidden;box-shadow:0 4px 16px #17324d10}
+.dayhead{padding:17px;display:flex;justify-content:space-between;gap:12px;cursor:pointer}
+.dayhead h2{font-size:18px;margin:0}.badge{white-space:nowrap;background:#edf4f8;color:var(--blue);border-radius:99px;padding:5px 9px;font-size:12px}
+.content{display:none;padding:0 17px 18px;border-top:1px solid var(--line)}.day.open .content{display:block}
+.item{padding:13px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}.time{font-weight:700;color:var(--blue);font-size:14px}.title{font-weight:700;margin:4px 0}.desc{font-size:14px;line-height:1.65;color:#53616b}.hotel{background:#f7f4ed;padding:11px;border-radius:12px;margin-top:10px;font-size:14px}
+.section{font-size:20px;font-weight:800;margin:20px 4px 8px}.tip{background:#fff;border-left:4px solid var(--gold);padding:13px 14px;border-radius:12px;margin:9px 0;font-size:14px;line-height:1.65}
+.nav{position:fixed;z-index:10;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding:9px 5px calc(9px + env(safe-area-inset-bottom));gap:4px}.nav button{border:0;background:transparent;color:var(--muted);font-size:11px;padding:7px 8px;border-radius:12px}.nav button.active{background:#edf4f8;color:var(--blue);font-weight:700}
+.search{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 14px;font-size:15px;margin:5px 0 8px}
+.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0;font-size:14px;line-height:1.5}.check input{margin-top:4px}
+a{color:var(--blue)}
+
+.mapbtn{display:inline-block;text-decoration:none;background:#edf4f8;color:#2f668d;padding:8px 11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:7px}
+.flight{background:#eef5f8;border-radius:14px;padding:13px;margin-top:9px}.flight b{font-size:15px}.countdown{font-size:14px;font-weight:700;color:#c79a42}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;text-decoration:none;color:var(--text);font-size:13px}.quick b{display:block;font-size:15px;margin-bottom:4px}
+</style>
+</head>
+<body>
+<header class="hero">
+<small>2026 / 10 / 14 ～ 10 / 20</small>
+<h1>🍻 名古屋 Chill 7天6夜</h1>
+<p>員工旅遊漫遊手冊・9大2小</p>
+</header>
+<main class="container">
+<div class="cards">
+<a class="quick" href="https://www.google.com/maps/search/?api=1&query=Hotel+Keihan+Nagoya" target="_blank">🏨 <b>飯店地圖</b>京阪名古屋</a>
+<a class="quick" href="https://www.google.com/maps/search/?api=1&query=Fairfield+by+Marriott+Gifu+Seiryu+Satoyama+Park" target="_blank">🏨 <b>飯店地圖</b>岐阜 Fairfield</a>
+<a class="quick" href="https://www.google.com/maps/search/?api=1&query=Mitsui+Garden+Hotel+Nagoya+Premier" target="_blank">🏨 <b>飯店地圖</b>三井花園名古屋</a>
+<a class="quick" href="https://www.google.com/maps/search/?api=1&query=Chubu+Centrair+International+Airport" target="_blank">✈️ <b>機場地圖</b>中部國際機場</a>
+</div>
+<div id="countdown" class="tip" style="margin-top:10px"></div>
+<input class="search" id="search" placeholder="🔎 搜尋景點、餐廳、飯店、交通…">
+
+<div id="days"></div>
+
+<section id="rules">
+<div class="section">🎒 團員守則</div>
+<div class="tip"><b>這本手冊不是軍令狀，是旅程的小指南。</b><br>行程可以參考，腳步可以放慢；看到想逛的、想吃的、想休息的，隨時調整都沒問題。旅行最重要的是：玩得開心、吃得滿足、平安回家。</div>
+<div class="section">🚗 交通安全</div>
+<div class="tip">包車日為 Day 3、Day 4、Day 5。請準時集合，避免影響後續景點。行李放車上時，護照、錢包、貴重物品與行動電源務必隨身攜帶。</div>
+<div class="section">🎒 裝備提醒</div>
+<div class="tip">10月中旬早晚溫差較大，白川鄉等山區更涼，請準備保暖外套。Day 3、Day 4 山路較多，容易暈車者可準備暈車藥與水。</div>
+<div class="section">💳 購物與付款</div>
+<div class="tip">日本退稅規則可能因制度調整而變動，出發前請再次確認最新規定。護照建議隨身攜帶；郊區小店、餐券機等仍可能需要日幣現金。</div>
+<div class="section">📶 網路與緊急聯繫</div>
+<div class="tip">自由活動或 Day 6 分組時，請保持網卡／漫遊暢通並留意群組訊息。走散或遇突發狀況時，先查看飯店資訊並聯繫同行同事。</div>
+</section>
+
+<section id="checklist">
+<div class="section">✅ 出發前檢查</div>
+<label class="check"><input type="checkbox">護照</label>
+<label class="check"><input type="checkbox">日幣現金／信用卡</label>
+<label class="check"><input type="checkbox">網卡／漫遊</label>
+<label class="check"><input type="checkbox">行動電源</label>
+<label class="check"><input type="checkbox">外套／雨具</label>
+<label class="check"><input type="checkbox">常備藥／暈車藥</label>
+</section>
+</main>
+<nav class="nav">
+<button class="active" onclick="go('days',this)">📅<br>行程</button>
+<button onclick="go('rules',this)">📌<br>守則</button>
+<button onclick="go('checklist',this)">✅<br>清單</button>
+</nav>
+<script>
+const data=[
+["Day 1｜10/14（三）","✈️ 抵達名古屋","⭐⭐","🚗","17:15－21:05","中華航空 CI154｜台北 → 名古屋中部國際機場","搭乘中華航空 CI154 從台北出發，直飛抵達名古屋中部國際機場。","21:05－22:15","機場出關 → 專屬包車 → 飯店 Check in","機場出關後搭乘專屬包車直達名古屋京阪飯店。","22:15 後","🍺 宵夜場","入住後直奔宵夜場，為旅程揭開序幕。","🏨 名古屋京阪飯店（Hotel Keihan Nagoya）","🌤 約18～24°C，晚上稍涼。"],
+["Day 2｜10/15（四）","🌳 吉卜力公園","⭐⭐⭐","🚇","09:30","飯店出發","今天不安排包車，搭乘地鐵前往吉卜力公園。","10:30－15:30","🌳 吉卜力公園","全員攻陷吉卜力公園。","16:30","🚇 返回名古屋市區","搭乘地鐵返回市區。","18:00","🍗 世界の山ちゃん 手羽先宴","名古屋第一場美食開場，為旅程乾杯！","🏨 名古屋京阪飯店（Hotel Keihan Nagoya）","🌤 約18～25°C，適合戶外散步。"],
+["Day 3｜10/16（五）","🏯 犬山城・岐阜","⭐⭐⭐","🚗","09:00","專屬包車出發","全天包車拉車線，中途服務區休息，回程可在車上休息。","10:00－12:30","犬山城與城下町散策","犬山城與城下町自由散策。","15:30","🏨 入住岐阜飯店","Fairfield by Marriott Gifu Seiryu Satoyama Park。","18:00","🥩 飛驒牛／鄉土料理","岐阜住宿附近用餐，吃完早點休息準備隔天白川鄉。","🏨 Fairfield by Marriott Gifu Seiryu Satoyama Park","🌤 約17～24°C"],
+["Day 4｜10/17（六）","🏡 白川鄉・郡上八幡","⭐⭐⭐⭐⭐","🚗","08:30","專屬包車出發","山路較多，中途服務區休息。","11:00－14:00","🏡 白川鄉合掌村","展望台、老街、飛驒牛串自由散策。","15:00－17:00","💧 郡上八幡","宗祇水、古街散步。","18:30","返回飯店","19:30岐阜飯店附近晚餐，可請司機推薦在地料理或拉麵定食。","🏨 Fairfield by Marriott Gifu Seiryu Satoyama Park","🌤 山區早晚偏涼，約15～22°C"],
+["Day 5｜10/18（日）","🛍️ 長島度假村・名古屋","⭐⭐⭐⭐","🚗","09:00","專屬包車出發","行李直接放包車。","10:00－17:00","🛍️ 長島 Outlet ＋ 麵包超人","自由活動，滿足血拼與遛娃需求。","18:00","🏨 名古屋市區 Check in","返回市區飯店。","19:00","🍱 蓬萊軒鰻魚飯三吃","慶功宴，為完美行程乾杯！","🏨 三井花園飯店名古屋普米爾","🌤 約17～24°C"],
+["Day 6｜10/19（一）","⛩️ 名古屋慢活漫遊日","⭐⭐⭐","🚇","09:00－11:30","⛩️ 熱田神宮","搭地鐵名城線至「神宮西站」或「傳馬町站」步行即達。早晨漫步參天古木，感受名古屋歷史文化。","11:30－12:30","🍱 蓬萊軒鰻魚飯（ひつまぶし）","參拜後享用名古屋代表美食。","12:30－13:30","🚶 彈性移動","休息、會合或分組自由移動。","13:30－18:00","✨ 下午彈性分組","① 豐田汽車博物館　② 名古屋車站商圈　③ 名古屋港水族館　④ 名古屋市科學館　⑤ 大須觀音商店街","19:00","🍻 最後一晚居酒屋聚餐","暢聊旅程回憶。","🏨 三井花園飯店名古屋普米爾","🌤 約18～25°C"],
+["Day 7｜10/20（二）","✈️ 平安返家","⭐⭐","🚗","上午","專屬包車送機","飯店退房，行李上包車；前往中部國際機場展望台看飛機、採買伴手禮。","09:55－11:55","✈️ 中華航空 CI155","名古屋 → 台北，帶著滿滿回憶返家。","11:55","🏠 平安返台","7天6夜名古屋 Chill 之旅圓滿成功！","","",""]
+];
+function render(q=""){
+ const box=document.getElementById("days"); box.innerHTML="";
+ data.forEach((d,i)=>{
+  const text=d.join(" ").toLowerCase(); if(q && !text.includes(q.toLowerCase())) return;
+  const el=document.createElement("article"); el.className="day"+(i===0?" open":"");
+  let c="";
+  for(let j=4;j<d.length;j+=3){
+   if(!d[j]) continue;
+   let place = (d[j+1]||"").replace(/^[^\p{L}\p{N}]+/u,"").split("｜")[0].trim();
+   let map = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place+" Japan")}`;
+   c+=`<div class="item"><div class="time">${d[j]}</div><div class="title">${d[j+1]||""}</div><div class="desc">${d[j+2]||""}</div><a class="mapbtn" href="${map}" target="_blank">📍 在 Google Maps 查看</a></div>`;
+  }
+  el.innerHTML=`<div class="dayhead"><div><h2>${d[0]}</h2><div style="margin-top:4px;color:#71808c;font-size:14px">${d[1]}</div></div><span class="badge">${d[3]} ${d[2]}</span></div><div class="content">${c}<div class="hotel">${d[d.length-2]||""}<br>${d[d.length-1]||""}</div></div>`;
+  el.querySelector(".dayhead").onclick=()=>el.classList.toggle("open");
+  box.appendChild(el);
+ });
+}
+function go(id,btn){document.getElementById(id).scrollIntoView({behavior:"smooth",block:"start"});document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));btn.classList.add("active")}
+document.getElementById("search").addEventListener("input",e=>render(e.target.value));
+document.querySelectorAll("#checklist input").forEach((x,i)=>{x.checked=localStorage.getItem("check"+i)==="1";x.onchange=()=>localStorage.setItem("check"+i,x.checked?"1":"0")});
+
+function countdown(){
+ const start=new Date("2026-10-14T00:00:00+08:00"), end=new Date("2026-10-20T23:59:59+08:00"), now=new Date();
+ const el=document.getElementById("countdown");
+ if(now<start){let d=Math.ceil((start-now)/86400000);el.innerHTML=`✈️ 距離名古屋出發還有 <span class="countdown">${d} 天</span>！準備好 Chill 出發了嗎？`}
+ else if(now<=end){el.innerHTML=`🍻 旅程進行中！今天記得看行程、集合時間與群組訊息。`}
+ else {el.innerHTML=`🏠 名古屋 Chill 之旅已圓滿結束！期待下一趟旅行 ✨`}
+}
+countdown();setInterval(countdown,60000);
+
+render();
+if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body></html>
