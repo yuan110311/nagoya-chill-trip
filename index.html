@@ -26,6 +26,8 @@ a{color:var(--blue)}
 .mapbtn{display:inline-block;text-decoration:none;background:#edf4f8;color:#2f668d;padding:8px 11px;border-radius:10px;font-size:13px;font-weight:700;margin-top:7px}
 .flight{background:#eef5f8;border-radius:14px;padding:13px;margin-top:9px}.flight b{font-size:15px}.countdown{font-size:14px;font-weight:700;color:#c79a42}
 .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;text-decoration:none;color:var(--text);font-size:13px}.quick b{display:block;font-size:15px;margin-bottom:4px}
+
+.temp-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0 18px;box-shadow:0 3px 12px #17324d0d}.temp-form{display:grid;gap:9px}.temp-form input,.temp-form textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px 11px;font:inherit;background:#fff}.temp-form textarea{min-height:72px;resize:vertical}.temp-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.temp-add{border:0;border-radius:12px;padding:11px;background:var(--navy);color:#fff;font-weight:700;font-size:14px}.temp-card{background:#f7f4ed;border-radius:13px;padding:12px;margin-top:10px}.temp-card h3{margin:3px 0 5px;font-size:15px}.temp-meta{font-size:12px;color:var(--muted)}.temp-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.temp-actions button,.temp-actions a{border:0;text-decoration:none;background:#fff;color:var(--blue);padding:7px 9px;border-radius:9px;font-size:12px;font-weight:700}.empty-temp{font-size:13px;color:var(--muted);padding:5px 0}.danger{color:#b24b4b!important}
 </style>
 </head>
 <body>
@@ -45,6 +47,22 @@ a{color:var(--blue)}
 <input class="search" id="search" placeholder="🔎 搜尋景點、餐廳、飯店、交通…">
 
 <div id="days"></div>
+
+
+<section id="temporary">
+<div class="section">📝 臨時行程</div>
+<div class="temp-wrap">
+  <div class="tip" style="margin-top:0"><b>旅途中臨時決定去哪裡？</b><br>新增後會儲存在這台手機的 App 裡，不需要重新上傳 GitHub。</div>
+  <div class="temp-form">
+    <div class="temp-row"><input id="tempDate" type="date" value="2026-10-14"><input id="tempTime" type="time" value="12:00"></div>
+    <input id="tempTitle" placeholder="📌 行程名稱，例如：名古屋站購物">
+    <input id="tempPlace" placeholder="📍 地點，例如：名古屋站">
+    <textarea id="tempNote" placeholder="📝 備註（可不填）"></textarea>
+    <button class="temp-add" id="tempAdd">➕ 新增臨時行程</button>
+  </div>
+  <div id="tempList"></div>
+</div>
+</section>
 
 <section id="rules">
 <div class="section">🎒 團員守則</div>
@@ -114,7 +132,7 @@ function countdown(){
 }
 countdown();setInterval(countdown,60000);
 
-render();
+render();\nconst TEMP_KEY="nagoyaTempTrips";\nfunction getTemps(){try{return JSON.parse(localStorage.getItem(TEMP_KEY)||"[]")}catch(e){return []}}\nfunction saveTemps(a){localStorage.setItem(TEMP_KEY,JSON.stringify(a))}\nfunction esc(v){return String(v||"").replace(/[&<>'"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[m]))}\nfunction renderTemps(){\n const box=document.getElementById("tempList"), a=getTemps().sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time));\n if(!a.length){box.innerHTML='<div class="empty-temp">目前還沒有臨時行程 ✨</div>';return}\n box.innerHTML=a.map((x,i)=>{\n   const map=x.place?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.place+" Japan")}`:"";\n   return `<div class="temp-card"><div class="temp-meta">📅 ${esc(x.date)}　⏰ ${esc(x.time)}</div><h3>${esc(x.title)}</h3>${x.place?`<div class="temp-meta">📍 ${esc(x.place)}</div>`:""}${x.note?`<div class="desc" style="margin-top:5px">${esc(x.note).replace(/\\n/g,"<br>")}</div>`:""}<div class="temp-actions">${map?`<a href="${map}" target="_blank">📍 地圖</a>`:""}<button onclick="editTemp(${i})">✏️ 編輯</button><button class="danger" onclick="deleteTemp(${i})">🗑️ 刪除</button></div></div>`\n }).join("");\n}\nfunction addTemp(){\n const date=document.getElementById("tempDate").value,time=document.getElementById("tempTime").value,title=document.getElementById("tempTitle").value.trim(),place=document.getElementById("tempPlace").value.trim(),note=document.getElementById("tempNote").value.trim();\n if(!date||!time||!title){alert("請至少填寫日期、時間和行程名稱 😊");return}\n const a=getTemps();a.push({date,time,title,place,note});saveTemps(a);\n document.getElementById("tempTitle").value="";document.getElementById("tempPlace").value="";document.getElementById("tempNote").value="";renderTemps();\n}\nfunction editTemp(i){\n const a=getTemps(),x=a[i]; if(!x)return;\n const title=prompt("修改行程名稱：",x.title); if(title===null)return;\n const place=prompt("修改地點（可留白）：",x.place||""); if(place===null)return;\n const note=prompt("修改備註（可留白）：",x.note||""); if(note===null)return;\n x.title=title.trim()||x.title;x.place=place.trim();x.note=note.trim();saveTemps(a);renderTemps();\n}\nfunction deleteTemp(i){if(!confirm("確定要刪除這個臨時行程嗎？"))return;const a=getTemps();a.splice(i,1);saveTemps(a);renderTemps()}\ndocument.getElementById("tempAdd").addEventListener("click",addTemp);\nrenderTemps();\n
 if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body></html>
